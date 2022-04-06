@@ -14,4 +14,6 @@ function generateKeys() {
     fs.writeSync(fdPrivate, privateKey, 'utf8');
 }
 
-generateKeys();
+module.exports = {
+    generateKeys
+}

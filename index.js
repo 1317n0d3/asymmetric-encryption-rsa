@@ -1,26 +1,17 @@
-const NodeRSA = require('node-rsa'),
-    fs = require('fs');
+const prompt = require("prompt"),
+    app = require('./app'),
+    path = require('path');
 
-const publicKey = new NodeRSA(),
-    privateKey = new NodeRSA();
+console.log(`
+    1.Generate key pair
+    2.Encrypt with public key
+    3.Encrypt with private key
+    4.Decrypt with public key
+    5.Decrypt with private key
+    `)
 
-const public = fs.readFileSync('./keys/public.pem', 'utf8'),
-    private = fs.readFileSync('./keys/private.pem', 'utf8');
+prompt.start()
 
-publicKey.importKey(public);
-privateKey.importKey(private);
-
-function encryptFile() {
-    const message = fs.readFileSync("./data.txt", "utf8");
-
-    const encrypted = privateKey.encryptPrivate(message, 'base64');
-    console.log(encrypted)
-    return encrypted;
-}
-
-function decryptFile() {
-    const decrypted = publicKey.decryptPublic(encryptFile(), 'utf8')
-    console.log(decrypted)
-}
-
-decryptFile()
+prompt.get(['mode', 'keyPath'], function (err, result) {
+    app.execute(result.mode, path.resolve(result.keyPath))
+});
