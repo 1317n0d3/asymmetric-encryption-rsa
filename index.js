@@ -1,6 +1,7 @@
 const prompt = require("prompt"),
     app = require('./app'),
-    path = require('path');
+    path = require('path'),
+    keysGenerator = require('./keysGenerator');
 
 console.log(`
     1.Generate key pair
@@ -13,5 +14,7 @@ console.log(`
 prompt.start()
 
 prompt.get(['mode', 'keyPath'], function (err, result) {
-    app.execute(result.mode, path.resolve(result.keyPath))
+    const keyPath = path.resolve(result.keyPath)
+    if (+result.mode === 1) keysGenerator.generateKeys(keyPath)
+    else app.execute(result.mode, keyPath)
 });

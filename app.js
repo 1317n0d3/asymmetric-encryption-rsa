@@ -1,6 +1,5 @@
 const NodeRSA = require('node-rsa'),
-    fs = require('fs'),
-    keysGenerator = require("./keysGenerator");
+    fs = require('fs');
 
 function execute(mode, keyPath) {
     const rsaKey = new NodeRSA();
@@ -12,9 +11,6 @@ function execute(mode, keyPath) {
     let res;
 
     switch (+mode) {
-        case 1:
-            keysGenerator.generateKeys();
-            return;
         case 2: // Encrypt with public key
             res = rsaKey.encrypt(message, 'base64');
             break;
